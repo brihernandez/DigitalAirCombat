@@ -241,7 +241,15 @@ function Ace.TrackedAircraftByID:startTracking(unit)
 
   -- Notify the modules.
   if AceHP then AceHP.onTrackingAircraftStarted(aircraft) end
-  if AceAmmo then AceAmmo.validateLoadout(aircraft) end
+  if AceAmmo then
+    local ammo = AceAmmo.validateLoadout(aircraft)
+    if ammo then
+      trigger.action.outTextForGroup(
+        aircraft.groupID,
+        AceAmmo.getLoadoutDisplayString(aircraft.typeName, ammo),
+        10, false)
+    end
+  end
 
   return aircraft
 end
@@ -346,7 +354,6 @@ function Ace.TrackedAircraftByID:startTrackingAllAircraftAlreadyInMission()
 
 end
 
-
 --------------------------
 -- Event handlers
 --------------------------
@@ -415,7 +422,7 @@ function Ace:onTakeoff(time, unit, place, subplace)
       trigger.action.outTextForGroup(
         aircraft.groupID,
         AceAmmo.getLoadoutDisplayString(aircraft.typeName, ammo),
-        5, false)
+        10, false)
     end
   end
 end
