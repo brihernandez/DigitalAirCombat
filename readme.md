@@ -25,9 +25,17 @@ By chance, the HP system actually addresses one of my biggest problems with grou
 
 With the HP system in place, getting tagged by the DshK on top of a T-55 while flying past at mach 1 isn't a death sentence. It'll reduce your HP, but it won't outright *kill* you the way it so often happens in DCS. While testing these scripts, I found it a very welcome change.
 
-### Multiple ejector racks trade weight/drag for burst damage.
+### Multiple ejector racks are a choice to trade weight/drag for burst damage.
 
-Infinite ammo works on a per-launcher/rack basis in DCS. A rack doesn't get physically reloaded until every munition on it has been fired. Since aircraft get the same amount of ammo no matter how many
+Infinite ammo works on a per-launcher/rack basis in DCS. A rack doesn't get physically reloaded until every munition on it has been fired. Since aircraft get the same amount of ammo no matter how many of a store is loaded, there isn't really *that* much of a benefit from carrying 6 Mk82s versus just a pair.
+
+However, depending on mission design, you might want to trade off the extra weight/drag for the ability to drop multiple munitions in a single pass. For example, when flying against a convoy, 2 bombs vs 6 bombs is the difference between destroying most or all of it in a single pass.
+
+### The gun is way better.
+
+Because of the damage boost that the gun gets against ground targets in the `AceSplash` module, the gun is much more useful against ground targets than it previous was. When combined with infinite ammo, it's a very viable way to destroy ground targets if you're either out of ammo or have some kind of purely air to air loadout.
+
+Dogfights also should be a bit more reliant on the gun because the HP system and missile warnings will make it more likely for planes to get "too close for missiles". With the HP system, the gun is also the fastest way to kill a jet at full HP since all you need is a solid burst and don't have to wait for the reload. If nothing else, a glancing hit will usually take off a significant portion of HP and greatly reduce the number of missiles to kill the target.
 
 ### Dogfights with more modern jets aren't over in seconds.
 
