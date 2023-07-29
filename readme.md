@@ -25,6 +25,10 @@ By chance, the HP system actually addresses one of my biggest problems with grou
 
 With the HP system in place, getting tagged by the DshK on top of a T-55 while flying past at mach 1 isn't a death sentence. It'll reduce your HP, but it won't outright *kill* you the way it so often happens in DCS. While testing these scripts, I found it a very welcome change.
 
+### Multiple ejector racks trade weight/drag for burst damage.
+
+Infinite ammo works on a per-launcher/rack basis in DCS. A rack doesn't get physically reloaded until every munition on it has been fired. Since aircraft get the same amount of ammo no matter how many
+
 ### Dogfights with more modern jets aren't over in seconds.
 
 Modern missiles, even if you're only talking about an AIM-9L (which is what in my tests/demo I treat as the "standard" missile) are extremely lethal due to their maneuverability, all-aspect nature, and warheads.
@@ -35,11 +39,11 @@ With the `AceEagleEye` module, you get a warning for every launch. AIM-9Ls are r
 
 Coupling all this together, you get fights which last longer, at closer ranges, and can often get into a situation where the planes are "too close for missiles" and have to resort to guns. Guns are also still the only way to "stealth" kill another aircraft, and guns are infinite ammo.
 
-### Radar missiles don't work.
+### Radar missiles don't play well.
 
-I couldn't figure out how to get radar guided missiles to work nicely with this. If you have more than 2 air to air missiles (e.g. 4) then you'd be able to "alpha strike" another plane and basically kill it in one shot. Better games will balance this by having long range missiles easier to dodge, but this just isn't the case in DCS. With only a handful of exceptions, most radar guided missiles are more difficult to evade due to not being spoofable by countermeasures, and often being just as manevuerable as Sidewinder.
+I couldn't figure out how to get radar guided missiles to work nicely with this. If you have more than 2 air to air missiles (e.g. 4) then you'd be able to "alpha strike" another plane and basically kill it a single salvo. Better games will balance this by having long range missiles easier to dodge, but this just isn't the case in DCS. With only a handful of exceptions, most radar guided missiles are more difficult to evade due to not being spoofable by countermeasures, and often being just as manevuerable as Sidewinder.
 
-I did try some things, such as limiting the range of radar guided missiles (to make them a sort of super missile), a mechanic that is still implemented into `AceAmmo`, but it wasn't enough. AMRAAMs are particularly problematic because they are in many ways more effective than a Sidewinder even if their range is severely limited to being only as long as a Sidewinder.
+I did try some things, such as limiting the range of radar guided missiles (to make them a sort of super missile), a mechanic that is still implemented into `AceAmmo`, but it wasn't enough and doesn't feel good. AMRAAMs are particularly problematic because they are in many ways more effective than an AIM-9L, even in WVR. There aren't many situations where the Sidewinder would connect that an AMRAAM wouldn't.
 
 Ideally, I could tweak the stats of missiles to make this work better, but that's not practical in DCS. A Cold War setting, using planes which have access to worse missiles, is the closest thing to a real solution this has. However these scripts and demo mission sidestep the issue entirely by simply not allowing their use.
 
@@ -80,7 +84,30 @@ On takeoff/landing from a friendly airfield, HP is automatically restored.
 
 ## AceAmmo
 
-The most complicated of the scripts, but it's conceptually very simple.
+The most complicated of the scripts, but it's conceptually very simple. It uses DCS' "Unlimited Weapons" option to add a game ammo system to the aircraft.  For example, an F-16 can physically load 2 AIM-9L, and 6 Mk82s, but this counts for 10 AIM-9s and 24 Mk82s. When an aircraft's ammo is depleted, the weapons can no longer be fired (they are despawned on launch). Reloading can be accomplished by calling the validateLoadout function.
+
+This script is meant to be very specifically tuned for the mission and for balance. By default, loadouts follow these rules:
+
+1. On aircraft spawn, and takeoff from a friendly airfield, loadouts get validated.
+2. Only **TWO** types of weapons may be loaded onto the plane at once. Typically this is an AIM-9 + some A-G weapon.
+3. Weapons must be loaded **in pairs** or else they are invalid. E.g. you cannot load a single Mk84 onto a plane and have it count.
+4. Each aircraft has individual ammo counts for each weapon **type**, not based on how many are on the jet.
+5. After firing, the ammo is deducted, and when ammo is depleted, the weapon cannot be fired again **even if it is physically loaded**.
+6. To replenish ammo counts, you must land and take off again from a friendly airfield.
+
+Also worth noting is an optional parameter for each weapon called `timeToLive` as defined in the `AceAmmo.AMMO_DATA` table. This value is an override for how long the weapon will exist after firing, and can be used to enforce shorter engagement ranges. By default, this is only enabled for Sidewinders, and not by much, but this was part of an attempt to [make radar missiles usable](#radar-missiles-dont-play-well).
+
+### Options
+
+`AceAmmo.USE_AMMO_DATA_AS_WHITELIST = true`: When true, if any weapon that HAS NOT been registered in AMMO_DATA is fired from the given plane, it will be removed as if it was out of ammo.
+
+`AceAmmo.MAX_NUMBER_OF_WEAPON_TYPES = 2`: Puts a hard limit on the different TYPES that can be loaded onto a plane.  This is a very gamey way of limiting things to prevent the trick of loading one example of every type of weapon and then having a crazy arsenal.
+
+`AceAmmo.TRACK_AMMO_ONLY_ON_PLAYERS = true`: When true, AI are allowed to fire an infinite number of any weapons. When false they obey the same ammo rules as players do.
+
+`AceAmmo.REQUIRE_WEAPONS_LOADED_IN_PAIRS = true`: When true, a weapon is not considered loaded onto the plane unless there are two examples of it on the plane. Can be used to prevent weird loadouts.
+
+`AceAmmo.DEFAULT_LOW_AMMO_COUNT = 4`: Fallback for when the ammo count for a weapon drops below this value, and if the AceEagleEye module is active, then it will report that ammo is low.
 
 ## AceSplash
 
