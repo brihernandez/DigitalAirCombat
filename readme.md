@@ -6,7 +6,7 @@ Digital Air Combat is a completely server-side, and vaguely modular, set of scri
 
 This is absolutely not for everyone. It's a very radical approach to DCS, but it's an idea that's been floating around in my head as I've played across many DCS servers, picking and choosing the things I like.
 
-**TL;DR: What if Ace Combat but DCS.**
+**TL;DR: What if DCS but Ace Combat?
 
 Each module is explained in more detail below, but listed here are the main features of each:
 
