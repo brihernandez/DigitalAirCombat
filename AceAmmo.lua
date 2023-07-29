@@ -65,6 +65,7 @@ local AMMO_DATA = {
     ["Mk_84"] = 8,
     ["HYDRA_70_M151"] = 114,
     ["AGM_65D"] = 8,
+    ["AGM_88"] = 8,
     ["CBU_87"] = 16,
   },
   ["FA-18C_hornet"] = {
