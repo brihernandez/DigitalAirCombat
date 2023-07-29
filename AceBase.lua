@@ -242,6 +242,7 @@ local AI_PILOT_NAME = "AI Pilot"
 -- Returns added aircraft.
 function Ace.TrackedAircraftByID:startTracking(unit)
   if not Ace.isUnitAnAircraft(unit, Ace.ENABLE_HELICOPTERS) then return end
+  if Ace.TrackedAircraftByID:getAircraftByUnit(unit) then return end
 
   local group = unit:getGroup()
   local typeName = unit:getTypeName()
