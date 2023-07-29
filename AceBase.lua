@@ -52,6 +52,15 @@ local function printError(source, message)
   end
 end
 
+local vec3 = {}
+function vec3.distance(pointA, pointB)
+  local x = pointA.x - pointB.x
+  local y = pointA.y - pointB.y
+  local z = pointA.z - pointB.z
+  local square = (x * x) + (y * y) + (z * z)
+  return math.sqrt(square)
+end
+
 -- Attempts to convert an Object to Unit. If this fails, it probably returns nil.
 function Ace.objectToUnit(object)
   return Unit.getByName(object:getName())
@@ -125,6 +134,25 @@ function Ace.isAirToGroundMunition(weapon)
   if isMunition and not isMissile then return true end
   -- Missiles can include AAM and SAM, so make sure it's not those two.
   return isMissile and weapon:getDesc().missileCategory > 2
+end
+
+-- Returns (bool isAtAirfield, bool isAtFriendlyAirfield)
+function Ace.IsUnitAtFriendlyAirfield(unit)
+  if not unit or not unit:isExist() then return false, false end
+  if unit:inAir() then return false, false end
+
+  local allAirfields = world.getAirbases()
+  local closestDistance = 999999999999999999999.9;
+  local isClosestFriendly = false
+  for i = 1, #allAirfields do
+    local distance = vec3.distance(unit:getPoint(), allAirfields[i]:getPoint())
+    if distance < closestDistance then
+      closestDistance = distance
+      isClosestFriendly = allAirfields[i]:getCoalition() == unit:getCoalition()
+    end
+  end
+
+  return closestDistance < 5000.0, isClosestFriendly
 end
 
 function Ace.printTable(node)
@@ -235,6 +263,8 @@ function Ace.TrackedAircraftByID:startTracking(unit)
     isLandedAtAirfield = false,
     isLandedAtFriendlyAirfield = false,
   }
+
+  aircraft.isLandedAtAirfield, aircraft.isLandedAtFriendlyAirfield = Ace.IsUnitAtFriendlyAirfield(aircraft.unit)
 
   self[aircraft.unitID] = aircraft
   printDebug("startTracking", "Tracking aircraft " .. aircraft.fullName .. ".")
