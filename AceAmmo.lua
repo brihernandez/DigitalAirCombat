@@ -1,10 +1,16 @@
+-- Uses DCS' "Unlimited Weapons" option to add a game ammo system to the aircraft.
+-- For example, an F-16 can physically load 2 AIM-9L, and 6 Mk82s, but this counts
+-- for 10 AIM-9s and 24 Mk82s. When an aircraft's ammo is depleted, the weapons can
+-- no longer be fired (they are despawned on launch). Reloading can be accomplished
+-- by calling the validateLoadout function.
 AceAmmo = {}
 
 --------------------------
 -- Options
 --------------------------
 
--- When true, if any weapon is fired from the given plane, it will be removed.
+-- When true, if any weapon that HAS NOT been registered in AMMO_DATA is fired from
+-- the given plane, it will be removed as if it was out of ammo.
 AceAmmo.USE_AMMO_DATA_AS_WHITELIST = true
 
 -- Puts a hard limit on the different TYPES that can be loaded onto a plane.
@@ -78,6 +84,13 @@ local AMMO_DATA = {
   },
 }
 
+-- displayName: Nicer name used when printing the ammo counts. If you wanted to be
+--              goofy about this, you could make readouts say things like "XAGM".
+-- timeToLive: Override for how long the weapon will exist after firing. Used to keep
+--             missile ranges short.
+-- maxSupported: Parameter I didn't finish developing because AMRAAMs are too good,
+--               if it did work, only this many of a weapon can be in the air at once.
+-- lowAmmo: Override for the low ammo notifications.
 local WEAPON_DATA = {
   -- AAMs
   ["AIM-9L"] = { displayName = "AIM-9", timeToLive = 7.0 },

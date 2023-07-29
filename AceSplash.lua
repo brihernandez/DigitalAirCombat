@@ -38,9 +38,10 @@ local SHOW_ERROR = true
 -- lookup is also more performant than the DCS fallback.
 -- explMass: Explosion mass of a warhead.
 -- radiusLimit: Puts a hard limit on the distance at which splash damage is applied.
--- Some weapons have a huge radius at which they damage unarmored targets, even if
--- they only do 1% damage. Without this value, Zunis have a ~300m splash radius.
--- Be aware that large values do not expand the splash radius, it can only limit.
+--              Some weapons have a huge radius at which they damage unarmored targets,
+--              even if they only do 1% damage. Without this value, Zunis have a ~300m
+--              splash radius. Be aware that large values do not expand the splash
+--              radius, it can only limit.
 local SPLASH_DATA = {
   ["HYDRA_70_M151"] = { explMass = 3 },
   ["S-5M"] = { explMass = 3, },
