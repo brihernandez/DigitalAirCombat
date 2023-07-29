@@ -270,6 +270,15 @@ function Ace.TrackedAircraftByID:startTracking(unit)
   self[aircraft.unitID] = aircraft
   printDebug("startTracking", "Tracking aircraft " .. aircraft.fullName .. ".")
 
+  -- Add commands.
+  if AceAmmo then
+    missionCommands.addCommandForGroup(
+      aircraft.groupID,
+      "Validate Loadout", {},
+      Ace.TrackedAircraftByID.RunValidateLoadoutCommand,
+      aircraft)
+  end
+
   -- Notify the modules.
   if AceHP then AceHP.onTrackingAircraftStarted(aircraft) end
   if AceAmmo then
@@ -283,6 +292,24 @@ function Ace.TrackedAircraftByID:startTracking(unit)
   end
 
   return aircraft
+end
+
+function Ace.TrackedAircraftByID.RunValidateLoadoutCommand(aircraft)
+  if aircraft and aircraft.unit:isExist() then
+    if aircraft.isLandedAtAirfield and aircraft.isLandedAtFriendlyAirfield then
+      local message = "No loadout info!"
+      if AceAmmo then
+        AceAmmo.validateLoadout(aircraft)
+        message = string.format("%s", AceAmmo.getLoadoutDisplayString(aircraft.typeName, aircraft.ammo))
+      end
+      trigger.action.outTextForGroup(aircraft.groupID, message, 10, false)
+    else
+      trigger.action.outTextForGroup(
+        aircraft.groupID,
+        "Must be landed at friendly airfield to validate loadout!",
+        10, false)
+    end
+  end
 end
 
 function Ace.TrackedAircraftByID:stopTracking(unit)
