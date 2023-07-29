@@ -4,9 +4,9 @@
 
 Digital Air Combat is a completely server-side, and vaguely modular, set of scripts designed to create a more "gamey" version of DCS to encourage higher speed, a more forgiving PVP environment, and closer range action than is typical for DCS, even with modern aircraft. At its core, it's built around using *highly* curated aircraft and plane sets.
 
-This is absolutely not for everyone. It's a very radical approach to DCS, but it's an idea that's been floating around in my head as I've played across many DCS servers, picking and choosing the things I like.
+This is absolutely not for everyone. It's a very radical approach to DCS, but it's an idea that's been floating around in my head as I've played across many DCS servers, and thinking about the things I liked and disliked across them.
 
-**TL;DR: What if DCS but Ace Combat?
+**TL;DR: What if DCS but Ace Combat?**
 
 Each module is explained in more detail below, but listed here are the main features of each:
 
