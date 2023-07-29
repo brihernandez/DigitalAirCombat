@@ -1,8 +1,8 @@
-# DCS Ace Fun
+# Digital Air Combat
 
 ![](Screenshots/convoys.jpg)
 
-[THING] is a completely server-side, and vaguely modular, set of scripts designed to create a more "gamey" version of DCS to encourage higher speed, a more forgiving PVP environment, and closer range action than is typical for DCS, even with modern aircraft. At its core, it's built around using *highly* curated aircraft and plane sets.
+Digital Air Combat is a completely server-side, and vaguely modular, set of scripts designed to create a more "gamey" version of DCS to encourage higher speed, a more forgiving PVP environment, and closer range action than is typical for DCS, even with modern aircraft. At its core, it's built around using *highly* curated aircraft and plane sets.
 
 This is absolutely not for everyone. It's a very radical approach to DCS, but it's an idea that's been floating around in my head as I've played across many DCS servers, picking and choosing the things I like.
 
@@ -17,15 +17,15 @@ Each module is explained in more detail below, but listed here are the main feat
 
 The HP and Ammo scripts are the core to this entire experience and to build the gameplay that I was aiming for. The Splash and Eagle Eye scripts are more for flavoring and "polish" and are less essential.
 
-### What are the gameplay implications?
+## What are the gameplay implications?
 
-#### A band-aid for the ground fire accuracy problem?
+### A band-aid for the ground fire accuracy problem?
 
 By chance, the HP system actually addresses one of my biggest problems with ground attack in DCS. In DCS, every vehicle is perfectly accurate no matter if it's a radar guided Gepard or a guy with an AK. As long as you are within their engagement ring, you will received perfectly aimed and accurate fire. For aircraft that rely on dumb fired weapons, and necessarily have to get close (helicopters especially suffer from this), this makes it risky beyond reason to use dumb fired weapons.
 
 With the HP system in place, getting tagged by the DshK on top of a T-55 while flying past at mach 1 isn't a death sentence. It'll reduce your HP, but it won't outright *kill* you the way it so often happens in DCS. While testing these scripts, I found it a very welcome change.
 
-#### Dogfights with more modern jets aren't over in seconds.
+### Dogfights with more modern jets aren't over in seconds.
 
 Modern missiles, even if you're only talking about an AIM-9L (which is what in my tests/demo I treat as the "standard" missile) are extremely lethal due to their maneuverability, all-aspect nature, and warheads.
 
@@ -35,7 +35,7 @@ With the `AceEagleEye` module, you get a warning for every launch. AIM-9Ls are r
 
 Coupling all this together, you get fights which last longer, at closer ranges, and can often get into a situation where the planes are "too close for missiles" and have to resort to guns. Guns are also still the only way to "stealth" kill another aircraft, and guns are infinite ammo.
 
-#### Radar missiles don't work.
+### Radar missiles don't work.
 
 I couldn't figure out how to get radar guided missiles to work nicely with this. If you have more than 2 air to air missiles (e.g. 4) then you'd be able to "alpha strike" another plane and basically kill it in one shot. Better games will balance this by having long range missiles easier to dodge, but this just isn't the case in DCS. With only a handful of exceptions, most radar guided missiles are more difficult to evade due to not being spoofable by countermeasures, and often being just as manevuerable as Sidewinder.
 
@@ -43,7 +43,7 @@ I did try some things, such as limiting the range of radar guided missiles (to m
 
 Ideally, I could tweak the stats of missiles to make this work better, but that's not practical in DCS. A Cold War setting, using planes which have access to worse missiles, is the closest thing to a real solution this has. However these scripts and demo mission sidestep the issue entirely by simply not allowing their use.
 
-### How to use
+## How to use
 
 Load the scripts that you want to use into your DCS mission. It's important that the `AceBase` script is loaded last, but otherwise you can pick and choose. For example, if you don't care for the respawning weapons, but still want to have some kind of HP system and have your own splash script (or don't want to use any), you can load only `AceHP` and `AceBase` in that order.
 
@@ -51,7 +51,7 @@ I highly recommend checking out each of the files yourself, as they will likely 
 
 # Technical Overview
 
-The [THING] is broken down into separate modules, with all them plugging into the required `AceBase` module.
+The Digital Air Combat is broken down into separate modules, with all them plugging into the required `AceBase` module.
 
 ## AceBase
 
