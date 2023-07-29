@@ -92,6 +92,10 @@ local AMMO_DATA = {
 -- maxSupported: Parameter I didn't finish developing because AMRAAMs are too good,
 --               if it did work, only this many of a weapon can be in the air at once.
 -- lowAmmo: Override for the low ammo notifications.
+-- neededForPair: When AceAmmo.REQUIRE_WEAPONS_LOADED_IN_PAIRS is enabled, a minimum
+--                of this many weapons must be loaded before it's considered loaded
+--                loaded as a pair. Typical use case is for rocket pods, for which
+--                2 loaded weapons is accomplished with a single pod.
 local WEAPON_DATA = {
   -- AAMs
   ["AIM-9L"] = { displayName = "AIM-9", timeToLive = 7.0 },
@@ -100,18 +104,19 @@ local WEAPON_DATA = {
   ["P_73"] = { displayName = "R-73", timeToLive = 8.0 },
 
   -- Rockets
-  ["HYDRA_70_M151"] = { displayName = "Hydra", lowAmmo = 38},
-  ["Zuni_127"] = { displayName = "Zuni", lowAmmo = 8},
-  ["C_8"] = { displayName = "S-8 (HEAT/Frag)", lowAmmo = 32, },
-  ["C_8OFP2"] = { displayName = "S-8 (MPP)", lowAmmo = 32 },
+  ["HYDRA_70_M151"] = { displayName = "Hydra", lowAmmo = 38, neededForPair = 20},
+  ["Zuni_127"] = { displayName = "Zuni", lowAmmo = 8, neededForPair = 5,},
+  ["C_8"] = { displayName = "S-8 (HEAT/Frag)", lowAmmo = 32, neededForPair = 33,},
+  ["C_8OFP2"] = { displayName = "S-8 (MPP)", lowAmmo = 32, neededForPair = 33},
 
   -- Bombs
   ["Mk_82"] = { displayName = "Mk82", lowAmmo = 6},
   ["Mk_84"] = { displayName = "Mk84" },
 
   -- AGMs
-  ["AGM_65D"] = { displayName = "AGM-65D", lowAmmo = 2 },
-  ["AGM_65F"] = { displayName = "AGM-65F", lowAmmo = 2 },
+  ["AGM_65D"] = { displayName = "AGM-65D", lowAmmo = 3 },
+  ["AGM_65F"] = { displayName = "AGM-65F", lowAmmo = 3 },
+  ["AGM_88"] = { displayName = "AGM-88", lowAmmo = 3 },
 }
 
 --------------------------
@@ -142,6 +147,15 @@ function WEAPON_DATA:getTimeToLive(weaponTypeName)
   local data = WEAPON_DATA[weaponTypeName]
   if data and data.timeToLive then return data.timeToLive
   else return -1 end
+end
+
+-- Returns the minimum physically loaded ammo count to count as a pair.
+-- For most weapons, this is just 2, but for some weapons like launchers,
+-- this should be set to a single pod's worth of munitions.
+function WEAPON_DATA:getNeededForPair(weaponTypeName)
+  local data = WEAPON_DATA[weaponTypeName]
+  if data and data.neededForPair then return data.neededForPair
+  else return 2 end
 end
 
 -- Returns the weaponTypeName if no displayname is found.
@@ -197,13 +211,13 @@ function AceAmmo.validateLoadout(aircraft)
     local isMunition = dcsAmmo[i].desc.category > 0
 
     -- Check to make sure a pair is loaded instead of just a single weapon (optional).
-    local hasPairLoaded = dcsAmmo[i].count >= 2
+    local ammoTypeName = Ace.trimTypeName(dcsAmmo[i].desc.typeName)
+    local hasPairLoaded = dcsAmmo[i].count >= WEAPON_DATA:getNeededForPair(ammoTypeName)
     local isLoadingAllowed = not AceAmmo.REQUIRE_WEAPONS_LOADED_IN_PAIRS or (AceAmmo.REQUIRE_WEAPONS_LOADED_IN_PAIRS and hasPairLoaded)
 
     if isMunition and isLoadingAllowed then
       -- The DCS ammo array is stored by weapon type, not pylon or launcher. Each entry in
       -- the array corresponds to one type of weapon.
-      local ammoTypeName = Ace.trimTypeName(dcsAmmo[i].desc.typeName)
       printDebug("onValidateLoadout", "DCS ammo " .. ammoTypeName .. ".")
       local gameAmmoCount = AMMO_DATA:getAmmoCount(aircraft.typeName, ammoTypeName)
       printDebug("onValidateLoadout", "Game ammo count for type: " .. gameAmmoCount .. ".")
