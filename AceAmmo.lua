@@ -49,8 +49,10 @@ end
 -- Data tables
 --------------------------
 
+-- displayName: Nicer name used when printing the ammo counts.
 local AMMO_DATA = {
   ["F-16C_50"] = {
+    displayName = "F-16C",
     ["AIM-9L"] = 10,
     ["AIM_120"] = 4,
     ["Mk_82"] = 24,
@@ -60,6 +62,7 @@ local AMMO_DATA = {
     ["CBU_87"] = 16,
   },
   ["FA-18C_hornet"] = {
+    displayName = "F/A-18C",
     ["AIM-9L"] = 10,
     ["Mk_82"] = 24,
     ["Mk_84"] = 8,
@@ -109,6 +112,14 @@ function AMMO_DATA:getAmmoCount(aircrafTypeName, ammoTypeName)
   else
     printError("getAmmoCount", string.format("No ammo type found on aircraft %s for %s", aircrafTypeName, ammoTypeName))
     return 0
+  end
+end
+
+function AMMO_DATA:getDisplayName(aircraftTypeName)
+  if self[aircraftTypeName] and self[aircraftTypeName].displayName then
+    return self[aircraftTypeName].displayName
+  else
+    return aircraftTypeName
   end
 end
 
@@ -202,7 +213,7 @@ function AceAmmo.validateLoadout(aircraft)
 end
 
 function AceAmmo.getLoadoutDisplayString(aircraftTypeName, ammoTable)
-  local output = aircraftTypeName
+  local output = AMMO_DATA:getDisplayName(aircraftTypeName)
   for ammoName, ammoCount in pairs(ammoTable) do
     local displayName = WEAPON_DATA:getDisplayName(ammoName)
     output = output .. string.format("\n%3d  %s", ammoCount, displayName)
