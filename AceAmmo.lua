@@ -59,7 +59,7 @@ end
 local AMMO_DATA = {
   ["F-16C_50"] = {
     displayName = "F-16C",
-    ["AIM-9L"] = 10,
+    ["AIM-9L"] = 24,
     ["AIM_120"] = 4,
     ["Mk_82"] = 24,
     ["Mk_84"] = 8,
@@ -70,7 +70,7 @@ local AMMO_DATA = {
   },
   ["FA-18C_hornet"] = {
     displayName = "F/A-18C",
-    ["AIM-9L"] = 10,
+    ["AIM-9L"] = 26,
     ["Mk_82"] = 24,
     ["Mk_84"] = 8,
     ["HYDRA_70_M151"] = 114,
