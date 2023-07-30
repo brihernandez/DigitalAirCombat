@@ -201,6 +201,8 @@ function AceAmmo.validateLoadout(aircraft)
   printDebug("onValidateLoadout", "Building ammo loadout for " .. aircraft.fullName .. ".")
   aircraft.ammo = {}
   local dcsAmmo = aircraft.unit:getAmmo()
+  if not dcsAmmo then return {} end
+
   local loadedTypeCount = 0
   for i = 1, #dcsAmmo do
 
