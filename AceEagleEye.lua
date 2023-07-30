@@ -29,88 +29,88 @@ end
 --------------------------
 
 local MISSILE_INCOMING = {
-  "Sounds/MissileIncoming/1.wav",
-  "Sounds/MissileIncoming/2.wav",
-  "Sounds/MissileIncoming/3.wav",
+  "EagleEye/MissileIncoming/1.wav",
+  "EagleEye/MissileIncoming/2.wav",
+  "EagleEye/MissileIncoming/3.wav",
 }
 
 local MISSILE_HIT = {
-  "Sounds/MissileHit/1.wav",
-  "Sounds/MissileHit/2.wav",
-  "Sounds/MissileHit/3.wav",
+  "EagleEye/MissileHit/1.wav",
+  "EagleEye/MissileHit/2.wav",
+  "EagleEye/MissileHit/3.wav",
 }
 
 local MISSILE_LOW = {
-  "Sounds/MissileAmmo/Low1.wav",
-  "Sounds/MissileAmmo/Low2.wav",
+  "EagleEye/MissileAmmo/Low1.wav",
+  "EagleEye/MissileAmmo/Low2.wav",
 }
 
 local MISSILE_EMPTY = {
-  "Sounds/MissileAmmo/Empty1.wav",
-  "Sounds/MissileAmmo/Empty2.wav",
+  "EagleEye/MissileAmmo/Empty1.wav",
+  "EagleEye/MissileAmmo/Empty2.wav",
 }
 
 local SP_WEAPON_LOW = {
-  "Sounds/SPWeaponAmmo/Low1.wav",
-  "Sounds/SPWeaponAmmo/Low2.wav",
+  "EagleEye/SPWeaponAmmo/Low1.wav",
+  "EagleEye/SPWeaponAmmo/Low2.wav",
 }
 
 local SP_WEAPON_EMPTY = {
-  "Sounds/SPWeaponAmmo/Empty1.wav",
-  "Sounds/SPWeaponAmmo/Empty2.wav",
-  "Sounds/SPWeaponAmmo/Empty3.wav",
+  "EagleEye/SPWeaponAmmo/Empty1.wav",
+  "EagleEye/SPWeaponAmmo/Empty2.wav",
+  "EagleEye/SPWeaponAmmo/Empty3.wav",
 }
 
 local FRIENDLY_HIT = {
-  "Sounds/FriendlyHit/1.wav",
-  "Sounds/FriendlyHit/2.wav",
+  "EagleEye/FriendlyHit/1.wav",
+  "EagleEye/FriendlyHit/2.wav",
 }
 
 local KILL_PLANE = {
-  "Sounds/PlaneKill/1.wav",
-  "Sounds/PlaneKill/2.wav",
-  "Sounds/PlaneKill/3.wav",
-  "Sounds/PlaneKill/4.wav",
-  "Sounds/PlaneKill/5.wav",
-  "Sounds/PlaneKill/6.wav",
-  "Sounds/PlaneKill/7.wav",
-  "Sounds/PlaneKill/8.wav",
-  "Sounds/PlaneKill/9.wav",
-  "Sounds/PlaneKill/10.wav",
+  "EagleEye/PlaneKill/1.wav",
+  "EagleEye/PlaneKill/2.wav",
+  "EagleEye/PlaneKill/3.wav",
+  "EagleEye/PlaneKill/4.wav",
+  "EagleEye/PlaneKill/5.wav",
+  "EagleEye/PlaneKill/6.wav",
+  "EagleEye/PlaneKill/7.wav",
+  "EagleEye/PlaneKill/8.wav",
+  "EagleEye/PlaneKill/9.wav",
+  "EagleEye/PlaneKill/10.wav",
 }
 
 local KILL_AAA = {
-  "Sounds/AAAKill/1.wav",
-  "Sounds/AAAKill/2.wav",
-  "Sounds/AAAKill/3.wav",
-  "Sounds/AAAKill/4.wav",
+  "EagleEye/AAAKill/1.wav",
+  "EagleEye/AAAKill/2.wav",
+  "EagleEye/AAAKill/3.wav",
+  "EagleEye/AAAKill/4.wav",
 }
 
 local KILL_TARGET = {
-  "Sounds/TargetKill/1.wav",
-  "Sounds/TargetKill/2.wav",
+  "EagleEye/TargetKill/1.wav",
+  "EagleEye/TargetKill/2.wav",
 }
 
 local KILL_GROUND_TARGET = {
-  "Sounds/GroundTargetKill/1.wav",
-  "Sounds/GroundTargetKill/2.wav",
+  "EagleEye/GroundTargetKill/1.wav",
+  "EagleEye/GroundTargetKill/2.wav",
 }
 
 local KILL_TANK = {
-  "Sounds/TankKill/1.wav",
-  "Sounds/TankKill/2.wav",
-  "Sounds/TankKill/3.wav",
-  "Sounds/TankKill/4.wav",
+  "EagleEye/TankKill/1.wav",
+  "EagleEye/TankKill/2.wav",
+  "EagleEye/TankKill/3.wav",
+  "EagleEye/TankKill/4.wav",
 }
 
 local KILL_VEHICLE = {
-  "Sounds/VehicleKill/1.wav",
-  "Sounds/VehicleKill/2.wav",
+  "EagleEye/VehicleKill/1.wav",
+  "EagleEye/VehicleKill/2.wav",
 }
 
 local KILL_SAM = {
-  "Sounds/SAMKill/1.wav",
-  "Sounds/SAMKill/2.wav",
+  "EagleEye/SAMKill/1.wav",
+  "EagleEye/SAMKill/2.wav",
 }
 
 --------------------------
