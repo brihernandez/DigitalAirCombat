@@ -43,6 +43,7 @@ local SHOW_ERROR = true
 --              splash radius. Be aware that large values do not expand the splash
 --              radius, it can only limit.
 local SPLASH_DATA = {
+  ["M61_20_PGU28"] = { explMass = 1 },
   ["HYDRA_70_M151"] = { explMass = 3 },
   ["S-5M"] = { explMass = 3, },
   ["C_8"] = { explMass = 5, radiusLimit = 20},
