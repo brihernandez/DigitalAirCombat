@@ -55,6 +55,16 @@ I did try some things, such as limiting the range of radar guided missiles (to m
 
 Ideally, I could tweak the stats of missiles to make this work better, but that's not practical in DCS. A Cold War setting, using planes which have access to worse missiles, is the closest thing to a real solution this has. However these scripts and demo mission sidestep the issue entirely by simply not allowing their use.
 
+### The AIM-9L problem
+
+Related to the above, the default settings for all of these changes have been tuned with the AIM-9L in mind because it is the least common demoninator among the most commonly used aircraft in DCS (i.e. Hornet/F-16). This is not ideal.
+
+In my opinion, the most fun dogfighting is had when the missiles involved are **rear aspect** IR guided missiles. This allows the missile to be a powerful weapon, but not so dominant that they prevent dogfights from happening at all. Even better if the missile has poor tracking and so needs to be timed and aimed well in order to score a hit.
+
+Ideally, the AIM-9P, an advanced, but still rear aspect only, missile would be more widely available. The Russian planes have a good equivalent (though different) in the form of the R-60M. Because of the high maneuverability of the AIM-9L and its all-aspect tracking, the defaults for aircraft are such that it takes **4 hits** (2 salvos) in order to shoot down a player.
+
+I believe the ideals of Digital Air Combat are better met using older planes (i.e. Cold War) with older missiles and dumb munitions, and in such a mission I'd recommend adjusting settings such that player aircraft take only 2 missiles to kill.
+
 ## How to use
 
 Load the scripts that you want to use into your DCS mission. It's important that the `AceBase` script is loaded last, but otherwise you can pick and choose. For example, if you don't care for the respawning weapons, but still want to have some kind of HP system and have your own splash script (or don't want to use any), you can load only `AceHP` and `AceBase` in that order.
