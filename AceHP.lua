@@ -23,6 +23,8 @@ AceHP.DAMAGE_MUNITION_A2G = 1000
 -- HP damage applied by bullets depends on caliber. A value of 0.5 means
 -- a 20mm shell will do 10 damage.
 AceHP.DAMAGE_CALIBER_MULTIPLIER = 1.0
+-- Used to adjust the HP damage caused by gunfire from ground units.
+AceHP.AAA_DAMAGE_MULTIPLIER = 0.5
 
 -- Sometimes when a plane runs out of HP, the thing that killed it won't
 -- apply the damage because it doesn't become vulnerable "fast enough".
@@ -116,7 +118,7 @@ local function printError(source, message)
 end
 
 -- Relevant only for the HP system.
-local function getWeaponHPDamage(weapon)
+local function getWeaponHPDamage(weapon, firedFromUnit)
   if Ace.isAirToAirMissile(weapon) then
     return AceHP.DAMAGE_MISSILE_A2A
   elseif Ace.isSurfaceToAirMissile(weapon) then
@@ -124,7 +126,11 @@ local function getWeaponHPDamage(weapon)
   elseif Ace.isAirToGroundMunition(weapon) then
     return AceHP.DAMAGE_MUNITION_A2G
   elseif Ace.isGun(weapon) then
-    return Ace.getCaliber(weapon) * AceHP.DAMAGE_CALIBER_MULTIPLIER
+    local damage = Ace.getCaliber(weapon) * AceHP.DAMAGE_CALIBER_MULTIPLIER
+    if Ace.isUnitASurfaceObject(firedFromUnit) then
+      damage = damage * AceHP.AAA_DAMAGE_MULTIPLIER
+    end
+    return damage
   else
     printError("getWeaponHPDamage", weapon:getTypeName() .. ": Unhandled HP damage!")
     return 0
@@ -192,7 +198,7 @@ function AceHP.onHit(time, firedByUnit, weapon, hitObject)
     local aircraft = Ace.TrackedAircraftByID:getAircraftByUnit(hitAircraftUnit)
     if aircraft and aircraft.hp > 0 then
       printDebug("onHit", aircraft.fullName .. " is valid.")
-      local damage = math.ceil(getWeaponHPDamage(weapon))
+      local damage = math.ceil(getWeaponHPDamage(weapon, firedByUnit))
       printDebug("onHit", "Damage is " .. tostring(damage))
       AceHP.applyDamageToAircraft(aircraft, damage, Ace.isGun(weapon))
 

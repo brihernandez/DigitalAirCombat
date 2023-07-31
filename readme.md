@@ -96,6 +96,7 @@ On takeoff/landing from a friendly airfield, HP is automatically restored.
 - `AceHP.DAMAGE_MISSILE_SAM = 50`: Any missile fired from a SAM.
 - `AceHP.DAMAGE_MUNITION_A2G = 1000`: Any bomb, rocket, or AGM.
 - `AceHP.DAMAGE_CALIBER_MULTIPLIER = 1.0`: HP damage applied by bullets depends on caliber. A value of 0.5 means a 20mm shell will do 10 damage.
+- `AceHP.AAA_DAMAGE_MULTIPLIER = 0.5`: Used to adjust the HP damage caused by gunfire from ground units.
 - `AceHP.DESTROY_ON_HP_ZERO = true`: Sometimes when a plane runs out of HP, the thing that killed it won't apply the damage because it doesn't become vulnerable "fast enough". Enabling this causes an explosion at a random point near the plane to make sure it goes down when the HP reaces zero. This only affects missiles.
 - `AceHP.DESTROY_EXPLOSION_POWER = 10.0`: Strength of the destroy on HP zero explosion. High values can totally obliterate the plane.
 - `AceHP.PLAYER_HP_MULTIPLIER = 2.0`: Can be used to set players apart from AI.
