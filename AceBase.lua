@@ -80,6 +80,12 @@ function Ace.isUnitAnAircraft(unit, includeHelicopters)
   else return unit:getDesc().category < 1 end
 end
 
+-- REturns true for anything that's not a helicopter or aircraft.
+function Ace.isUnitASurfaceObject(unit)
+  if not unit or not unit:isExist() then return false end
+  return unit:getDesc().category > 1
+end
+
 -- If the object is an aircraft or helicopter, returns (true, Unit)
 -- Otherwise, returns false.
 function Ace.isObjectAnAircraft(object, includeHelicopters)
