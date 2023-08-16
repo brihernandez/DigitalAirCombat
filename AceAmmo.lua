@@ -71,6 +71,7 @@ local AMMO_DATA = {
   ["FA-18C_hornet"] = {
     displayName = "F/A-18C",
     ["AIM-9L"] = 26,
+    ["AIM_7"] = 6,
     ["Mk_82"] = 24,
     ["Mk_84"] = 8,
     ["HYDRA_70_M151"] = 114,
@@ -99,7 +100,8 @@ local AMMO_DATA = {
 local WEAPON_DATA = {
   -- AAMs
   ["AIM-9L"] = { displayName = "AIM-9", timeToLive = 7.0 },
-  ["AIM_120"] = { displayName = "AIM-120", timeToLive = 9.0, maxSupported = 1 },
+  ["AIM_7"] = { displayName = "AIM-7", timeToLive = 15.0, maxSupported = 1 },
+  ["AIM_120"] = { displayName = "AIM-120", timeToLive = 8.0, maxSupported = 1 },
   ["P_60"] = { displayName = "R-60", timeToLive = 7.0 },
   ["P_73"] = { displayName = "R-73", timeToLive = 8.0 },
 
