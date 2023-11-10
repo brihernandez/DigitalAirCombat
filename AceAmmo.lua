@@ -177,7 +177,7 @@ end
 function WEAPON_DATA:getLowAmmo(weaponTypeName)
   local data = WEAPON_DATA[weaponTypeName]
   if data and data.lowAmmo then return data.lowAmmo
-  else return AceAmmo.destroyMissile end
+  else return AceAmmo.DEFAULT_LOW_AMMO_COUNT end
 end
 
 --------------------------
