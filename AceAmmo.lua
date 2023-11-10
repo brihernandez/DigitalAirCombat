@@ -100,8 +100,8 @@ local AMMO_DATA = {
 local WEAPON_DATA = {
   -- AAMs
   ["AIM-9L"] = { displayName = "AIM-9", timeToLive = 7.0 },
-  ["AIM_7"] = { displayName = "AIM-7", timeToLive = 15.0, maxSupported = 1 },
-  ["AIM_120"] = { displayName = "AIM-120", timeToLive = 8.0, maxSupported = 1 },
+  ["AIM_7"] = { displayName = "AIM-7", timeToLive = 15.0, maxSupported = 1, lowAmmo = 3, },
+  ["AIM_120"] = { displayName = "AIM-120", timeToLive = 8.0, maxSupported = 1, lowAmmo = 2, },
   ["P_60"] = { displayName = "R-60", timeToLive = 7.0 },
   ["P_73"] = { displayName = "R-73", timeToLive = 8.0 },
 
