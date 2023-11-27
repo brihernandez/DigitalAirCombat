@@ -286,6 +286,8 @@ function Ace.TrackedAircraftByID:startTracking(unit)
 
   -- Add commands.
   if AceAmmo then
+    -- Removing the command before adding prevents double commands from appearing.
+    missionCommands.removeItemForGroup(aircraft.groupID, { VALIDATE_LOADOUT_STRING })
     missionCommands.addCommandForGroup(
       aircraft.groupID,
       VALIDATE_LOADOUT_STRING, {},
