@@ -247,10 +247,16 @@ end
 Ace.TrackedAircraftByID = {}
 local AI_PILOT_NAME = "AI Pilot"
 
--- Returns added aircraft.
+-- Returns added aircraft or nil if aircraft already was added.
 function Ace.TrackedAircraftByID:startTracking(unit)
   if not Ace.isUnitAnAircraft(unit, Ace.ENABLE_HELICOPTERS) then return end
-  if Ace.TrackedAircraftByID:getAircraftByUnit(unit) then return end
+
+  -- To prevent players from getting multiple times, guard against them getting re-initialized
+  -- in the tracking. On respawn, players can be re-initialized through the onPlayerEnterUnit.
+  -- On respawn, players DO NOT emit an onBirth event. However AI, on respawn, DO emit an onBirth
+  -- event because when mist "respawns" them it's actually making new ones with the same name and
+  -- somehow with the same IDs as well...
+  if Unit.getPlayerName(unit) and Ace.TrackedAircraftByID:getAircraftByUnit(unit) then return end
 
   local group = unit:getGroup()
   local typeName = unit:getTypeName()
@@ -434,7 +440,7 @@ function Ace:onEvent(event)
   if event.id == 2 then Ace:onHit(event.time, event.initiator, event.weapon, event.target) end
   if event.id == 28 then Ace:onKill(event.time, event.initiator, event.weapon, event.target, event.weapon_name) end
   if event.id == 15 then Ace:onBirth(event.time, event.initiator) end
-  if event.id == 30 then Ace:onUnitLost(event.time, event.initiator) end
+  if event.id == 8 then Ace:onDead(event.time, event.initiator) end
   if event.id == 3 then Ace:onTakeoff(event.time, event.initiator, event.place, event.subplace) end
   if event.id == 4 then Ace:onLand(event.time, event.initiator, event.place, event.subplace) end
   if event.id == 6 then Ace:onEject(event.time, event.initiator) end
@@ -460,6 +466,13 @@ function Ace:onHit(time, firedByUnit, weapon, targetObject)
 end
 
 function Ace:onKill(time, killerUnit, weapon, unitKilled, weaponName)
+  if unitKilled then
+    printDebug("onKill", "Unit killed " .. unitKilled:getName())
+    if Ace.isUnitAnAircraft(unitKilled, Ace.ENABLE_HELICOPTERS) then
+      Ace.TrackedAircraftByID:stopTracking(unitKilled)
+    end
+  end
+
   if AceEagleEye then AceEagleEye.onKill(time, killerUnit, weapon, unitKilled, weaponName) end
 end
 
@@ -476,12 +489,17 @@ end
 
 function Ace:onBirth(time, unit)
   if Ace.isUnitAnAircraft(unit, Ace.ENABLE_HELICOPTERS) then
-    local aircraft = Ace.TrackedAircraftByID:startTracking(unit)
+    printDebug("onBirth", "Player " .. tostring(Unit.getPlayerName(unit)) .. " " .. tostring(unit:getGroup():getName()))
+    Ace.TrackedAircraftByID:startTracking(unit)
   end
 end
 
-function Ace:onUnitLost(time, unit)
-  Ace.TrackedAircraftByID:stopTracking(unit)
+function Ace:onDead(time, object)
+  local unit = Ace.objectToUnit()
+  if unit then
+    printDebug("onDead", "Player " .. tostring(Unit.getPlayerName(unit)) .. " " .. tostring(unit:getGroup():getName()))
+    Ace.TrackedAircraftByID:stopTracking(unit)
+  end
 end
 
 function Ace:onTakeoff(time, unit, place, subplace)
