@@ -3,10 +3,10 @@
 -- callouts for ammo status.
 AceEagleEye = {}
 
-AceEagleEye.ReportKillDelay = 1.5
-AceEagleEye.ReportHitDelay = 1.5
+AceEagleEye.ReportKillDelay = 0.5
+AceEagleEye.ReportHitDelay = 0.25
 
-AceEagleEye.ReportHits = true
+AceEagleEye.ReportHits = false
 AceEagleEye.ReportFriendlyFire = true
 AceEagleEye.ReportKills = true
 AceEagleEye.ReportIncomingMissile = true
