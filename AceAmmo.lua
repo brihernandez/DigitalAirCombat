@@ -59,7 +59,7 @@ end
 local AMMO_DATA = {
   ["F-16C_50"] = {
     displayName = "F-16C",
-    ["AIM-9L"] = 24,
+    ["AIM-9L"] = 20,
     ["AIM_120"] = 4,
     ["Mk_82"] = 24,
     ["Mk_84"] = 8,
@@ -70,7 +70,7 @@ local AMMO_DATA = {
   },
   ["FA-18C_hornet"] = {
     displayName = "F/A-18C",
-    ["AIM-9L"] = 26,
+    ["AIM-9L"] = 20,
     ["AIM_7"] = 6,
     ["Mk_82"] = 24,
     ["Mk_84"] = 8,
@@ -78,9 +78,24 @@ local AMMO_DATA = {
     ["AGM_65F"] = 8,
     ["Zuni_127"] = 24,
   },
+  ["F-5E-3"] = {
+    ["AIM-9L"] = 16,
+    ["AIM-9P3"] = 16,
+  },
+  ["F-15C"] = {
+    ["AIM-9L"] = 24,
+    ["AIM_120"] = 4,
+    ["AIM_7"] = 0,
+  },
+  ["MiG-29A"] = {
+    ["P_60"] = 40,
+    ["P_73"] = 20,
+    ["C_8"] = 120,
+    ["C_8OFP2"] = 120,
+  },
   ["MiG-29S"] = {
-    ["P_60"] = 14,
-    ["P_73"] = 6,
+    ["P_60"] = 28,
+    ["P_73"] = 18,
     ["C_8"] = 120,
     ["C_8OFP2"] = 120,
   },
@@ -90,8 +105,8 @@ local AMMO_DATA = {
 --              goofy about this, you could make readouts say things like "XAGM".
 -- timeToLive: Override for how long the weapon will exist after firing. Used to keep
 --             missile ranges short.
--- maxSupported: Parameter I didn't finish developing because AMRAAMs are too good,
---               if it did work, only this many of a weapon can be in the air at once.
+-- maxSupported: Parameter I didn't finish developing because AMRAAMs are too good.
+--               If it did work, only this many of a weapon can be in the air at once.
 -- lowAmmo: Override for the low ammo notifications.
 -- neededForPair: When AceAmmo.REQUIRE_WEAPONS_LOADED_IN_PAIRS is enabled, a minimum
 --                of this many weapons must be loaded before it's considered loaded
@@ -99,11 +114,29 @@ local AMMO_DATA = {
 --                2 loaded weapons is accomplished with a single pod.
 local WEAPON_DATA = {
   -- AAMs
-  ["AIM-9L"] = { displayName = "AIM-9", timeToLive = 7.0 },
-  ["AIM_7"] = { displayName = "AIM-7", timeToLive = 15.0, maxSupported = 1, lowAmmo = 3, },
-  ["AIM_120"] = { displayName = "AIM-120", timeToLive = 8.0, maxSupported = 1, lowAmmo = 2, },
-  ["P_60"] = { displayName = "R-60", timeToLive = 7.0 },
-  ["P_73"] = { displayName = "R-73", timeToLive = 8.0 },
+  ["AIM-9L"] = { displayName = "AIM-9L" },
+  ["AIM_9"] = { displayName = "AIM-9M" },
+  ["AIM_9X"] = { displayName = "AIM-9X" },
+  ["AIM-7E-2"] = { displayName = "AIM-7E-2", timeToLive = 15.0, maxSupported = 1, lowAmmo = 2, },
+  ["AIM-7F"] = { displayName = "AIM-7F", timeToLive = 15.0, maxSupported = 1, lowAmmo = 2, },
+  ["AIM_7"] = { displayName = "AIM-7M", timeToLive = 15.0, maxSupported = 1, lowAmmo = 2, },
+  ["AIM-7P"] = { displayName = "AIM-7P", timeToLive = 15.0, maxSupported = 1, lowAmmo = 2, },
+  ["AIM-7MH"] = { displayName = "AIM-7MH", timeToLive = 15.0, maxSupported = 1, lowAmmo = 2, },
+  ["AIM_120"] = { displayName = "AIM-120B", timeToLive = 15.0, maxSupported = 1, lowAmmo = 2, },
+  ["AIM_120C"] = { displayName = "AIM-120C", timeToLive = 15.0, maxSupported = 1, lowAmmo = 2, },
+  ["AIM_54C_Mk60"] = { displayName = "AIM-54C Mk60", timeToLive = 20.0, maxSupported = 1, lowAmmo = 2, },
+  ["AIM_54C_Mk47"] = { displayName = "AIM-54C Mk47", timeToLive = 20.0, maxSupported = 1, lowAmmo = 2, },
+  ["AIM_54A_Mk47"] = { displayName = "AIM-54A Mk47", timeToLive = 20.0, maxSupported = 1, lowAmmo = 2, },
+  ["AIM_54A_Mk60"] = { displayName = "AIM-54A Mk60", timeToLive = 20.0, maxSupported = 1, lowAmmo = 2, },
+  ["R-55"] = { displayName = "R-55" },
+  ["RS2US"] = { displayName = "RS2US" },
+  ["R-3S"] = { displayName = "R-3S" },
+  ["R-3R"] = { displayName = "R-3R" },
+  ["R-13M"] = { displayName = "R-13M" },
+  ["R-13M1"] = { displayName = "R-13M1" },
+  ["R-60"] = { displayName = "R-60" },
+  ["P_60"] = { displayName = "R-60M" },
+  ["P_73"] = { displayName = "R-73" },
 
   -- Rockets
   ["HYDRA_70_M151"] = { displayName = "Hydra", lowAmmo = 38, neededForPair = 20},
@@ -113,7 +146,7 @@ local WEAPON_DATA = {
 
   -- Bombs
   ["Mk_82"] = { displayName = "Mk82", lowAmmo = 6},
-  ["Mk_84"] = { displayName = "Mk84" },
+  ["Mk_84"] = { displayName = "Mk84", lowAmmo = 2 },
 
   -- AGMs
   ["AGM_65D"] = { displayName = "AGM-65D", lowAmmo = 3 },
@@ -245,7 +278,7 @@ function AceAmmo.validateLoadout(aircraft)
 end
 
 function AceAmmo.getLoadoutDisplayString(aircraftTypeName, ammoTable)
-  local output = AMMO_DATA:getDisplayName(aircraftTypeName)
+  local output = "AMMO " .. AMMO_DATA:getDisplayName(aircraftTypeName)
   for ammoName, ammoCount in pairs(ammoTable) do
     local displayName = WEAPON_DATA:getDisplayName(ammoName)
     output = output .. string.format("\n%3d  %s", ammoCount, displayName)
