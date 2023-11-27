@@ -178,21 +178,6 @@ function AceHP.applyDamageToAircraft(aircraft, damage, isFromGun)
 end
 
 function AceHP.onHit(time, firedByUnit, weapon, hitObject)
-  local unit = Ace.objectToUnit(hitObject)
-  if unit then
-    printDebug("onHit", "Life: " .. tostring(hitObject:getLife()) .. "/" .. tostring(hitObject:getLife0()))
-    timer.scheduleFunction(
-      function()
-        if hitObject and hitObject:isExist() then
-          printDebug("onHit", "Delay Life: " .. tostring(hitObject:getLife()))
-        end
-      end,
-      nil,
-      timer.getTime() + 1)
-
-      --function() printDebug("onHit", "Delay Life: " .. tostring(hitObject:getLife())),
-  end
-
   local _, hitAircraftUnit = Ace.isObjectAnAircraft(hitObject)
   if hitAircraftUnit then
     local aircraft = Ace.TrackedAircraftByID:getAircraftByUnit(hitAircraftUnit)
@@ -232,7 +217,7 @@ local IMMORTAL_DISABLE = {
 }
 
 function AceHP.updateImmortalityOnAircraft(aircraft)
-  printDebug("updateImmortalityOnAircraft", aircraft.fullName .. " setting immortal!")
+  printDebug("updateImmortalityOnAircraft", aircraft.fullName .. " beginning immortal update!")
   local isImmortal = aircraft.hp > 0 and aircraft.isAirborne
   if isImmortal then
     aircraft.controller:setCommand(IMMORTAL_ENABLE)
