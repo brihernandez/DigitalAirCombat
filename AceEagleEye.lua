@@ -190,7 +190,7 @@ function AceEagleEye.onShot(time, firedByUnit, weapon)
     local targetObject = weapon:getTarget()
     if targetObject then
      local _, targetAircraftUnit = Ace.isObjectAnAircraft(targetObject)
-      if targetAircraftUnit and targetAircraftUnit:getPlayerName() then
+      if targetAircraftUnit and Unit.getPlayerName(targetAircraftUnit) then
         local groupID = targetAircraftUnit:getGroup():getID()
         trigger.action.outSoundForGroup(groupID, getRandomSoundFromArray(MISSILE_INCOMING))
         local weaponName = Ace.trimTypeName(weapon:getTypeName())
@@ -205,7 +205,7 @@ function AceEagleEye.onHit(time, firedByUnit, weapon, hitObject)
   if not AceEagleEye.ReportFriendlyFire and not AceEagleEye.ReportHits then return end
 
   -- Only players care about messages.
-  local playerName = firedByUnit:getPlayerName()
+  local playerName = Unit.getPlayerName(firedByUnit)
   if not playerName then return end
 
   -- Has to be a valid unit.
@@ -220,7 +220,7 @@ function AceEagleEye.onHit(time, firedByUnit, weapon, hitObject)
   end
 
   -- Normal hit against an enemy aircraft.
-  if AceEagleEye.ReportHits and Ace.isAirToAirMissile(weapon) and firedByUnit:getPlayerName() and hitUnit then
+  if AceEagleEye.ReportHits and Ace.isAirToAirMissile(weapon) and Unit.getPlayerName(firedByUnit) and hitUnit then
     AceEagleEye.playSoundForGroupDelayed(firedByGroupID, getRandomSoundFromArray(MISSILE_HIT), AceEagleEye.ReportHitDelay)
   end
 end
@@ -234,7 +234,7 @@ function AceEagleEye.onKill(time, killerUnit, weapon, unitKilled, weaponName)
   if not unitKilled or not unitKilled:isExist() then return end
 
   -- Messages are only for player aircraft.
-  local playerName = killerUnit:getPlayerName()
+  local playerName = Unit.getPlayerName(killerUnit)
   if playerName == nil then return end
 
   -- Don't say anything if a friendly was killed, just let the friendly hit mesag
@@ -247,8 +247,8 @@ function AceEagleEye.onKill(time, killerUnit, weapon, unitKilled, weaponName)
 
   local isAircraft = Ace.isUnitAnAircraft(unitKilled, true)
   if isAircraft then
-    if unitKilled:getPlayerName() then
-      killMessage = "Shot down " .. unitKilled:getPlayerName() .. " (" .. unitKilled:getTypeName() .. ") with " .. weaponName .. "!"
+    if Unit.getPlayerName(unitKilled) then
+      killMessage = "Shot down " .. tostring(Unit.getPlayerName(unitKilled)) .. " (" .. unitKilled:getTypeName() .. ") with " .. weaponName .. "!"
     else
       killMessage = "Shot down " .. unitKilled:getTypeName() .. " with " .. weaponName .. "!"
     end

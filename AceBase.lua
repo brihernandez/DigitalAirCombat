@@ -65,7 +65,7 @@ end
 
 -- Attempts to convert an Object to Unit. If this fails, it probably returns nil.
 function Ace.objectToUnit(object)
-  return Unit.getByName(object:getName())
+  if object then return Unit.getByName(object:getName()) else return nil end
 end
 
 -- Converts long type names like "weapons.shells.GAU8_30_HE" into "GAU8_30_HE".
@@ -82,7 +82,7 @@ function Ace.isUnitAnAircraft(unit, includeHelicopters)
   else return unit:getDesc().category < 1 end
 end
 
--- REturns true for anything that's not a helicopter or aircraft.
+-- Returns true for anything that's not a helicopter or aircraft.
 function Ace.isUnitASurfaceObject(unit)
   if not unit or not unit:isExist() then return false end
   return unit:getDesc().category > 1
@@ -255,7 +255,7 @@ function Ace.TrackedAircraftByID:startTracking(unit)
   local group = unit:getGroup()
   local typeName = unit:getTypeName()
   local pilotName = AI_PILOT_NAME
-  if unit:getPlayerName() then pilotName = unit:getPlayerName() end
+  if Unit.getPlayerName(unit) then pilotName = tostring(Unit.getPlayerName(unit)) end
   local aircraft = {
     unit = unit,
     unitID = unit:getID(),
@@ -442,11 +442,15 @@ function Ace:onEvent(event)
 end
 
 function Ace:onPlayerEnterUnit(time, unit)
-  printDebug("onPlayerEnterUnit", unit:getPlayerName() .. " entered slot " .. unit:getGroup():getName())
+  if unit then
+    printDebug("onPlayerEnterUnit", tostring(Unit.getPlayerName(unit)) .. " entered slot " .. unit:getGroup():getName())
+  end
 end
 
 function Ace:onPlayerLeaveUnit(time, unit)
-  printDebug("onPlayerLeaveUnit", unit:getPlayerName() .. " left unit " .. unit:getGroup():getName())
+  if unit then
+    printDebug("onPlayerLeaveUnit", tostring(Unit.getPlayerName(unit)) .. " left unit " .. unit:getGroup():getName())
+  end
 end
 
 function Ace:onHit(time, firedByUnit, weapon, targetObject)
