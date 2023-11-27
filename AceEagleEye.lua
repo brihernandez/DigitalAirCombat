@@ -6,6 +6,11 @@ AceEagleEye = {}
 AceEagleEye.ReportKillDelay = 1.5
 AceEagleEye.ReportHitDelay = 1.5
 
+AceEagleEye.ReportHits = true
+AceEagleEye.ReportFriendlyFire = true
+AceEagleEye.ReportKills = true
+AceEagleEye.ReportIncomingMissile = true
+
 --------------------------
 -- Debug
 --------------------------
@@ -177,6 +182,9 @@ function AceEagleEye.reportMinutesRemainingForGroup(playerGroupID, minutes)
 end
 
 function AceEagleEye.onShot(time, firedByUnit, weapon)
+  -- If disabled
+  if not AceEagleEye.ReportIncomingMissile then return end
+
   -- Missile incoming warning on the missile's target.
   if Ace.isAirToAirMissile(weapon) or Ace.isSurfaceToAirMissile(weapon) then
     local targetObject = weapon:getTarget()
@@ -193,6 +201,9 @@ function AceEagleEye.onShot(time, firedByUnit, weapon)
 end
 
 function AceEagleEye.onHit(time, firedByUnit, weapon, hitObject)
+  -- If all hits disabled.
+  if not AceEagleEye.ReportFriendlyFire and not AceEagleEye.ReportHits then return end
+
   -- Only players care about messages.
   local playerName = firedByUnit:getPlayerName()
   if not playerName then return end
@@ -215,9 +226,12 @@ function AceEagleEye.onHit(time, firedByUnit, weapon, hitObject)
 end
 
 function AceEagleEye.onKill(time, killerUnit, weapon, unitKilled, weaponName)
+  -- If disabled.
+  if not AceEagleEye.ReportKills then return end
 
   -- Don't try to interact with dead units.
   if not killerUnit or not killerUnit:isExist() then return end
+  if not unitKilled or not unitKilled:isExist() then return end
 
   -- Messages are only for player aircraft.
   local playerName = killerUnit:getPlayerName()
