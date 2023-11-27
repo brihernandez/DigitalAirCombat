@@ -3,6 +3,9 @@
 -- callouts for ammo status.
 AceEagleEye = {}
 
+AceEagleEye.ReportKillDelay = 1.5
+AceEagleEye.ReportHitDelay = 1.5
+
 --------------------------
 -- Debug
 --------------------------
@@ -131,6 +134,18 @@ local function getRandomSoundFromArray(soundArray)
   return soundArray[math.random(#soundArray)]
 end
 
+function AceEagleEye.playSoundForGroup(args, time)
+    trigger.action.outSoundForGroup(args.groupID, args.path)
+    return nil
+end
+
+function AceEagleEye.playSoundForGroupDelayed(playerGroupID, soundPath, delay)
+  timer.scheduleFunction(
+    AceEagleEye.playSoundForGroup,
+    { groupID = playerGroupID, path = soundPath },
+    timer.getTime() + delay)
+end
+
 function AceEagleEye.reportMissileLow(playerGroupID)
   trigger.action.outSoundForGroup(playerGroupID, getRandomSoundFromArray(MISSILE_LOW))
 end
@@ -188,14 +203,14 @@ function AceEagleEye.onHit(time, firedByUnit, weapon, hitObject)
 
   -- Report friendly fire!
   local firedByGroupID = firedByUnit:getGroup():getID()
-  if firedByUnit:getCoalition() == hitUnit:getCoalition() then
-    trigger.action.outSoundForGroup(firedByGroupID, getRandomSoundFromArray(FRIENDLY_HIT))
+  if AceEagleEye.ReportFriendlyFire and firedByUnit:getCoalition() == hitUnit:getCoalition() then
+    AceEagleEye.playSoundForGroupDelayed(firedByGroupID, getRandomSoundFromArray(FRIENDLY_HIT), AceEagleEye.ReportHitDelay)
     return
   end
 
   -- Normal hit against an enemy aircraft.
-  if Ace.isAirToAirMissile(weapon) and firedByUnit:getPlayerName() and hitUnit then
-    trigger.action.outSoundForGroup(firedByGroupID, getRandomSoundFromArray(MISSILE_HIT))
+  if AceEagleEye.ReportHits and Ace.isAirToAirMissile(weapon) and firedByUnit:getPlayerName() and hitUnit then
+    AceEagleEye.playSoundForGroupDelayed(firedByGroupID, getRandomSoundFromArray(MISSILE_HIT), AceEagleEye.ReportHitDelay)
   end
 end
 
@@ -223,7 +238,7 @@ function AceEagleEye.onKill(time, killerUnit, weapon, unitKilled, weaponName)
     else
       killMessage = "Shot down " .. unitKilled:getTypeName() .. " with " .. weaponName .. "!"
     end
-    trigger.action.outSoundForGroup(playerGroupID, getRandomSoundFromArray(KILL_PLANE))
+    AceEagleEye.playSoundForGroupDelayed(playerGroupID, getRandomSoundFromArray(KILL_PLANE), AceEagleEye.ReportKillDelay)
   else -- Ground unit of some kind.
     local isTank = unitKilled:hasAttribute("Tanks")
     local isVehicle = unitKilled:hasAttribute("Vehicles")
@@ -234,17 +249,17 @@ function AceEagleEye.onKill(time, killerUnit, weapon, unitKilled, weaponName)
     killMessage = "Destroyed " .. unitKilled:getTypeName() .. " with " .. weaponName .. "!"
 
     if isSAM then
-      trigger.action.outSoundForGroup(playerGroupID, getRandomSoundFromArray(KILL_SAM))
+      AceEagleEye.playSoundForGroupDelayed(playerGroupID, getRandomSoundFromArray(KILL_SAM), AceEagleEye.ReportKillDelay)
     elseif isAAA then
-      trigger.action.outSoundForGroup(playerGroupID, getRandomSoundFromArray(KILL_AAA))
+      AceEagleEye.playSoundForGroupDelayed(playerGroupID, getRandomSoundFromArray(KILL_AAA), AceEagleEye.ReportKillDelay)
     elseif isTank then
-      trigger.action.outSoundForGroup(playerGroupID, getRandomSoundFromArray(KILL_TANK))
+      AceEagleEye.playSoundForGroupDelayed(playerGroupID, getRandomSoundFromArray(KILL_TANK), AceEagleEye.ReportKillDelay)
     elseif isVehicle then
-      trigger.action.outSoundForGroup(playerGroupID, getRandomSoundFromArray(KILL_VEHICLE))
+      AceEagleEye.playSoundForGroupDelayed(playerGroupID, getRandomSoundFromArray(KILL_VEHICLE), AceEagleEye.ReportKillDelay)
     elseif isStructure then
-      trigger.action.outSoundForGroup(playerGroupID, getRandomSoundFromArray(KILL_GROUND_TARGET))
+      AceEagleEye.playSoundForGroupDelayed(playerGroupID, getRandomSoundFromArray(KILL_GROUND_TARGET), AceEagleEye.ReportKillDelay)
     else
-      trigger.action.outSoundForGroup(playerGroupID, getRandomSoundFromArray(KILL_TARGET))
+      AceEagleEye.playSoundForGroupDelayed(playerGroupID, getRandomSoundFromArray(KILL_TARGET), AceEagleEye.ReportKillDelay)
     end
   end
 
