@@ -7,6 +7,8 @@ Ace = {}
 local SHOW_DEBUG = false
 local SHOW_ERROR = true
 
+local VALIDATE_LOADOUT_STRING = "Validate Loadout"
+
 -- Required to enable helicopter related features.
 -- I didn't test this! I don't know if it works!
 Ace.ENABLE_HELICOPTERS = false
@@ -280,7 +282,7 @@ function Ace.TrackedAircraftByID:startTracking(unit)
   if AceAmmo then
     missionCommands.addCommandForGroup(
       aircraft.groupID,
-      "Validate Loadout", {},
+      VALIDATE_LOADOUT_STRING, {},
       Ace.TrackedAircraftByID.RunValidateLoadoutCommand,
       aircraft)
   end
@@ -325,6 +327,10 @@ function Ace.TrackedAircraftByID:stopTracking(unit)
   if aircraft then
     printDebug("stopTracking", "Stopped tracking aircraft " .. aircraft.fullName .. ".")
     self[aircraft.unitID] = nil
+
+    if AceAmmo then
+      missionCommands.removeItemForGroup(aircraft.groupID, { VALIDATE_LOADOUT_STRING })
+    end
 
     -- Notify the modules.
     if AceHP then AceHP.onTrackingAircraftStopped(aircraft) end
