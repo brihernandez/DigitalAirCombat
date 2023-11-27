@@ -210,7 +210,7 @@ function AceEagleEye.onHit(time, firedByUnit, weapon, hitObject)
 
   -- Has to be a valid unit.
   local hitUnit = Ace.objectToUnit(hitObject)
-  if not hitUnit or not hitObject:isExist() then return end
+  if not hitUnit then return end
 
   -- Report friendly fire!
   local firedByGroupID = firedByUnit:getGroup():getID()
@@ -230,8 +230,8 @@ function AceEagleEye.onKill(time, killerUnit, weapon, unitKilled, weaponName)
   if not AceEagleEye.ReportKills then return end
 
   -- Don't try to interact with dead units.
-  if not killerUnit or not killerUnit:isExist() then return end
-  if not unitKilled or not unitKilled:isExist() then return end
+  if not killerUnit then return end
+  if not unitKilled then return end
 
   -- Messages are only for player aircraft.
   local playerName = Unit.getPlayerName(killerUnit)
