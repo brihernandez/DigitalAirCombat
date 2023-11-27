@@ -28,6 +28,16 @@ end
 -- Sound clip paths
 --------------------------
 
+local MINUTES_REMAINING = {
+  [15] = "EagleEye/MinutesRemaining/15.wav",
+  [10] = "EagleEye/MinutesRemaining/10.wav",
+  [5] = "EagleEye/MinutesRemaining/5.wav",
+  [4] = "EagleEye/MinutesRemaining/4.wav",
+  [3] = "EagleEye/MinutesRemaining/3.wav",
+  [2] = "EagleEye/MinutesRemaining/2.wav",
+  [1] = "EagleEye/MinutesRemaining/1.wav",
+}
+
 local MISSILE_INCOMING = {
   "EagleEye/MissileIncoming/1.wav",
   "EagleEye/MissileIncoming/2.wav",
@@ -135,6 +145,20 @@ end
 
 function AceEagleEye.reportSPWeaponEmpty(playerGroupID)
   trigger.action.outSoundForGroup(playerGroupID, getRandomSoundFromArray(SP_WEAPON_EMPTY))
+end
+
+---@param minutes integer
+function AceEagleEye.reportMinutesRemainingForAll(minutes)
+  if MINUTES_REMAINING[minutes] then
+    trigger.action.outSound(MINUTES_REMAINING[minutes])
+  end
+end
+
+---@param minutes integer
+function AceEagleEye.reportMinutesRemainingForGroup(playerGroupID, minutes)
+  if MINUTES_REMAINING[minutes] then
+    trigger.action.outSoundForGroup(playerGroupID, MINUTES_REMAINING[minutes])
+  end
 end
 
 function AceEagleEye.onShot(time, firedByUnit, weapon)
