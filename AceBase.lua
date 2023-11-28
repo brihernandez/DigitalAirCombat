@@ -462,6 +462,7 @@ function Ace:onPlayerLeaveUnit(time, unit)
 end
 
 function Ace:onHit(time, firedByUnit, weapon, targetObject)
+  printDebug("onHit", string.format("fired by: %s, weapon: %s, hitObject: %s", tostring(firedByUnit:getTypeName()), tostring(weapon:getTypeName()), targetObject:getTypeName()))
   if AceHP then AceHP.onHit(time, firedByUnit, weapon, targetObject) end
   if AceSplash then AceSplash.onHit(time, firedByUnit, weapon, targetObject) end
   if AceEagleEye then AceEagleEye.onHit(time, firedByUnit, weapon, targetObject) end

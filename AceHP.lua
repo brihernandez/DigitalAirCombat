@@ -39,7 +39,7 @@ AceHP.DESTROY_EXPLOSION_POWER = 10.0
 -- Can be used to set players apart from AI.
 AceHP.PLAYER_HP_MULTIPLIER = 2.0
 
-local SHOW_DEBUG = false
+local SHOW_DEBUG = true
 local SHOW_ERROR = true
 
 --------------------------
@@ -178,6 +178,7 @@ function AceHP.applyDamageToAircraft(aircraft, damage, isFromGun)
 end
 
 function AceHP.onHit(time, firedByUnit, weapon, hitObject)
+  printDebug("onHit", string.format("fired by: %s, weapon: %s, hitObject: %s", tostring(firedByUnit:getTypeName()), tostring(weapon:getTypeName()), hitObject:getTypeName()))
   local _, hitAircraftUnit = Ace.isObjectAnAircraft(hitObject)
   if hitAircraftUnit then
     local aircraft = Ace.TrackedAircraftByID:getAircraftByUnit(hitAircraftUnit)
