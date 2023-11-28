@@ -39,8 +39,28 @@ AceHP.DESTROY_EXPLOSION_POWER = 10.0
 -- Can be used to set players apart from AI.
 AceHP.PLAYER_HP_MULTIPLIER = 2.0
 
+--------------------------
+-- Debug
+--------------------------
+
 local SHOW_DEBUG = true
 local SHOW_ERROR = true
+
+local function printDebug(source, message)
+  if SHOW_DEBUG then
+    local output = "AceHP (" .. source .. "): " .. message
+    env.info(output, false)
+    trigger.action.outText(output, 5, false)
+  end
+end
+
+local function printError(source, message)
+  if SHOW_ERROR then
+    local output = "AceHP ERROR (" .. source .. "): " .. message
+    env.error(output, false)
+    trigger.action.outText(output, 5, false)
+  end
+end
 
 --------------------------
 -- HP Data Table
@@ -101,20 +121,6 @@ local function box3GetMaxSize(box)
     math.abs(box.max.x),
     math.abs(box.max.y),
     math.abs(box.max.z))
-end
-
-local function printDebug(source, message)
-  if SHOW_DEBUG then
-    local output = "AceHP (" .. source .. "): " .. message
-    trigger.action.outText(output, 5, false)
-  end
-end
-
-local function printError(source, message)
-  if SHOW_ERROR then
-    local output = "AceHP ERROR (" .. source .. "): " .. message
-    trigger.action.outText(output, 5, false)
-  end
 end
 
 -- Relevant only for the HP system.

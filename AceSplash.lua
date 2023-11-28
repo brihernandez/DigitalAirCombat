@@ -86,6 +86,7 @@ end
 local function printDebug(source, message)
   if SHOW_DEBUG then
     local output = "AceSplash (" .. source .. "): " .. message
+    env.info(output, false)
     trigger.action.outText(output, 5, false)
   end
 end
@@ -93,6 +94,7 @@ end
 local function printError(source, message)
   if SHOW_ERROR then
     local output = "AceSplash ERROR (" .. source .. "): " .. message
+    env.error(output, false)
     trigger.action.outText(output, 5, false)
   end
 end

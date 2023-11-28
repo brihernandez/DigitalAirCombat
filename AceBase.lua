@@ -43,6 +43,7 @@ timer.scheduleFunction(confirmModulesLoaded, nil, timer.getTime() + 2)
 local function printDebug(source, message)
   if SHOW_DEBUG then
     local output = "AceBase (" .. source .. "): " .. message
+    env.log(output, false)
     trigger.action.outText(output, 5, false)
   end
 end
@@ -50,6 +51,7 @@ end
 local function printError(source, message)
   if SHOW_ERROR then
     local output = "AceBase ERROR (" .. source .. "): " .. message
+    env.error(output, false)
     trigger.action.outText(output, 5, false)
   end
 end
