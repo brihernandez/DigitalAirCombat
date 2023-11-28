@@ -17,6 +17,18 @@ Each module is explained in more detail below, but listed here are the main feat
 
 The HP and Ammo scripts are the core to this entire experience and to build the gameplay that I was aiming for. The Splash and Eagle Eye scripts are more for flavoring and "polish" and are less essential.
 
+## Very important limitations!
+
+As of November 27, 2023, this works (probably) on the current DCS build of **2.9.1.48335**.
+
+I've tried to make this as bug free as possible in an actual implementation of a mission, but DCS' scripting environment makes this difficult. There are two very important things to keep in mind when trying to use these scripts.
+
+1. **`AceHP` does not work in multiplayer**. The short version is that the events necessary for `AceHP` do not fire correctly when these scripts are used on a dedicated server. Player clients do not report their hits on invincible units to the server.
+
+2. **All aircraft must be single ships, within their own groups**. Due to a limitation in the way immortality is handled, it can only be applied to the whole group. All the code in this repository because of this limitations, and also because the Group scripting functions are less buggy.
+
+What does this mean? It mainly means that these scripts are best served in a singleplayer environment. Most critically, unless Eagle Dynamics fixes the immortal `hit` event bug, this set of scripts simply cannot be made to work.
+
 ## What are the gameplay implications?
 
 ### A band-aid for the ground fire accuracy problem?
