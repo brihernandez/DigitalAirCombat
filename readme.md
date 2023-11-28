@@ -25,9 +25,17 @@ I've tried to make this as bug free as possible in an actual implementation of a
 
 1. **`AceHP` does not work in multiplayer**. The short version is that the events necessary for `AceHP` do not fire correctly when these scripts are used on a dedicated server. Player clients do not report their hits on invincible units to the server.
 
-2. **All aircraft must be single ships, within their own groups**. Due to a limitation in the way immortality is handled, it can only be applied to the whole group. All the code in this repository because of this limitations, and also because the Group scripting functions are less buggy.
+2. **All aircraft must be single ships, within their own groups**. Due to a limitation in the way immortality is handled, it can only be applied to the whole group. All the code in this repository uses them because of this limitation, but Group scripting functions are less buggy in general.
 
-What does this mean? It mainly means that these scripts are best served in a singleplayer environment. Most critically, unless Eagle Dynamics fixes the immortal `hit` event bug, this set of scripts simply cannot be made to work.
+What does this mean? It mainly means that these scripts are best served in a singleplayer environment. Most critically, unless Eagle Dynamics fixes the immortal `hit` event bug, this set of scripts simply cannot be made to work in multiplayer.
+
+## Demo mission
+
+![](Screenshots/demomission.png)
+
+In this repo is a demo mission that I designed as a fun little team vs team dogfight match. Destroy respawning waves of enemies until you either deplete the enemy team of aircraft.
+
+The mission makes use of all the scripts except the splash script, since there aren't any air to ground units aside from protective SAMs.
 
 ## What are the gameplay implications?
 
